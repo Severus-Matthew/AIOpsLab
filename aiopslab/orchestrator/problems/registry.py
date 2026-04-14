@@ -11,6 +11,7 @@ from aiopslab.orchestrator.problems.pod_kill import *
 from aiopslab.orchestrator.problems.network_loss import *
 from aiopslab.orchestrator.problems.network_delay import *
 from aiopslab.orchestrator.problems.no_op import *
+from aiopslab.orchestrator.problems.generated.load_specs import load_generated_registry
 from aiopslab.orchestrator.problems.kernel_fault import *
 from aiopslab.orchestrator.problems.disk_woreout import *
 from aiopslab.orchestrator.problems.ad_service_failure import *
@@ -218,6 +219,7 @@ class ProblemRegistry:
             "flower_node_stop-detection": FlowerNodeStopDetection,
             "flower_model_misconfig-detection": FlowerModelMisconfigDetection,
         }
+        self.PROBLEM_REGISTRY.update(load_generated_registry())
         self.DOCKER_REGISTRY = [
             "flower_node_stop-detection",
             "flower_model_misconfig-detection",

@@ -1,0 +1,26 @@
+{
+  "scenario_id": "astronomy_shop_detection_cache_failure_diurnal_medium_frontend_07097",
+  "app": "astronomy_shop",
+  "task": "detection",
+  "fault": {
+    "type": "cache_failure",
+    "target": "frontend",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scenario_id": "astronomy_shop_mitigation_queue_problem_steady_low_medium_checkoutservice_08750",
+  "app": "astronomy_shop",
+  "task": "mitigation",
+  "fault": {
+    "type": "queue_problem",
+    "target": "checkoutservice",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_low",
+    "rate": 50,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

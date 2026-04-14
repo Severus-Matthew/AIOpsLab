@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_redeploy_without_pv_steady_mid_critical_reservation_03925",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "redeploy_without_pv",
+    "target": "reservation",
+    "severity": "critical",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

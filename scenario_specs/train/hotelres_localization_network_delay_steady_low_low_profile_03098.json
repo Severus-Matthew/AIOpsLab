@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_network_delay_steady_low_low_profile_03098",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "network_delay",
+    "target": "profile",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_low",
+    "rate": 50,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scenario_id": "astronomy_shop_localization_manual_gc_diurnal_critical_adservice_08160",
+  "app": "astronomy_shop",
+  "task": "localization",
+  "fault": {
+    "type": "manual_gc",
+    "target": "adservice",
+    "severity": "critical",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

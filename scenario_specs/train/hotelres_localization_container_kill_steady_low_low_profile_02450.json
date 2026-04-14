@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_container_kill_steady_low_low_profile_02450",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "container_kill",
+    "target": "profile",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_low",
+    "rate": 50,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

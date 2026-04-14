@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_app_misconfig_burst_high_medium_db_02400",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "app_misconfig",
+    "target": "db",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_high",
+    "rate": 250,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

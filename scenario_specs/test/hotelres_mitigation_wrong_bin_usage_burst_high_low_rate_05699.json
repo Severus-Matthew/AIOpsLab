@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_mitigation_wrong_bin_usage_burst_high_low_rate_05699",
+  "app": "hotelres",
+  "task": "mitigation",
+  "fault": {
+    "type": "wrong_bin_usage",
+    "target": "rate",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_high",
+    "rate": 250,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

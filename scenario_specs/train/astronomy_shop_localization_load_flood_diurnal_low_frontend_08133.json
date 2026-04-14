@@ -1,0 +1,26 @@
+{
+  "scenario_id": "astronomy_shop_localization_load_flood_diurnal_low_frontend_08133",
+  "app": "astronomy_shop",
+  "task": "localization",
+  "fault": {
+    "type": "load_flood",
+    "target": "frontend",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_analysis_wrong_bin_usage_steady_high_high_reservation_04933",
+  "app": "hotelres",
+  "task": "analysis",
+  "fault": {
+    "type": "wrong_bin_usage",
+    "target": "reservation",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_high",
+    "rate": 150,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

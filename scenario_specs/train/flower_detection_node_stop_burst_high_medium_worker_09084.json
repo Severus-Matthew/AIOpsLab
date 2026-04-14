@@ -1,0 +1,26 @@
+{
+  "scenario_id": "flower_detection_node_stop_burst_high_medium_worker_09084",
+  "app": "flower",
+  "task": "detection",
+  "fault": {
+    "type": "node_stop",
+    "target": "worker",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_high",
+    "rate": 250,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

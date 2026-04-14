@@ -1,0 +1,26 @@
+{
+  "scenario_id": "socialnet_detection_target_port_misconfig_diurnal_high_post-storage-service_06165",
+  "app": "socialnet",
+  "task": "detection",
+  "fault": {
+    "type": "target_port_misconfig",
+    "target": "post-storage-service",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

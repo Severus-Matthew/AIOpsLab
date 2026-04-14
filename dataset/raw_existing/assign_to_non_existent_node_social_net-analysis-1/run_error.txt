@@ -1,0 +1,1 @@
+[red]Timeout: Not all pods in namespace 'test-social-network' reached the Ready state within 300 seconds.

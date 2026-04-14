@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_network_loss_steady_high_high_db_01120",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "network_loss",
+    "target": "db",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_high",
+    "rate": 150,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

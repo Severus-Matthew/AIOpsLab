@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_kernel_fault_diurnal_critical_db_03096",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "kernel_fault",
+    "target": "db",
+    "severity": "critical",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

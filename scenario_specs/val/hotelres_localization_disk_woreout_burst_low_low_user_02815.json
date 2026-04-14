@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_disk_woreout_burst_low_low_user_02815",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "disk_woreout",
+    "target": "user",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_low",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

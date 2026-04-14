@@ -1,0 +1,26 @@
+{
+  "scenario_id": "tidb_cluster_operator_detection_operator_misoperation_steady_low_critical_db_09108",
+  "app": "tidb_cluster_operator",
+  "task": "detection",
+  "fault": {
+    "type": "operator_misoperation",
+    "target": "db",
+    "severity": "critical",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_low",
+    "rate": 50,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

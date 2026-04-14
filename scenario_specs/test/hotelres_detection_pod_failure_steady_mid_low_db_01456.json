@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_pod_failure_steady_mid_low_db_01456",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "pod_failure",
+    "target": "db",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

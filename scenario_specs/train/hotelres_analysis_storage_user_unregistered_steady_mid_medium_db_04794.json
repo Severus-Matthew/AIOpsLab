@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_analysis_storage_user_unregistered_steady_mid_medium_db_04794",
+  "app": "hotelres",
+  "task": "analysis",
+  "fault": {
+    "type": "storage_user_unregistered",
+    "target": "db",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

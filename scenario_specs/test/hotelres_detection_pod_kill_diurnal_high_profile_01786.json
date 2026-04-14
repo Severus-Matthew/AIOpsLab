@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_pod_kill_diurnal_high_profile_01786",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "pod_kill",
+    "target": "profile",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

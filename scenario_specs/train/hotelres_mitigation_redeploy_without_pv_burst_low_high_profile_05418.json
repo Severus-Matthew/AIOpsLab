@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_mitigation_redeploy_without_pv_burst_low_high_profile_05418",
+  "app": "hotelres",
+  "task": "mitigation",
+  "fault": {
+    "type": "redeploy_without_pv",
+    "target": "profile",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_low",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

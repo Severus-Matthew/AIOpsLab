@@ -1,0 +1,26 @@
+{
+  "scenario_id": "astronomy_shop_detection_queue_problem_burst_low_medium_checkoutservice_07586",
+  "app": "astronomy_shop",
+  "task": "detection",
+  "fault": {
+    "type": "queue_problem",
+    "target": "checkoutservice",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_low",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

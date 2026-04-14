@@ -1,0 +1,26 @@
+{
+  "scenario_id": "astronomy_shop_detection_no_op_steady_low_medium_adservice_07188",
+  "app": "astronomy_shop",
+  "task": "detection",
+  "fault": {
+    "type": "no_op",
+    "target": "adservice",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_low",
+    "rate": 50,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

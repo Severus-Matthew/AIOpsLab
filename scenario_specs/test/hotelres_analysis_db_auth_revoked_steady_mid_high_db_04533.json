@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_analysis_db_auth_revoked_steady_mid_high_db_04533",
+  "app": "hotelres",
+  "task": "analysis",
+  "fault": {
+    "type": "db_auth_revoked",
+    "target": "db",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

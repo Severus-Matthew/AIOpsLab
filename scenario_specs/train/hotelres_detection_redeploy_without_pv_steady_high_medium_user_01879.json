@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_redeploy_without_pv_steady_high_medium_user_01879",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "redeploy_without_pv",
+    "target": "user",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_high",
+    "rate": 150,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

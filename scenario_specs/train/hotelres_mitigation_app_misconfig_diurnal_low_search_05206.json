@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_mitigation_app_misconfig_diurnal_low_search_05206",
+  "app": "hotelres",
+  "task": "mitigation",
+  "fault": {
+    "type": "app_misconfig",
+    "target": "search",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

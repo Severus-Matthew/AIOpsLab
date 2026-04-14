@@ -1,0 +1,26 @@
+{
+  "scenario_id": "socialnet_analysis_target_port_misconfig_steady_high_high_user-service_06703",
+  "app": "socialnet",
+  "task": "analysis",
+  "fault": {
+    "type": "target_port_misconfig",
+    "target": "user-service",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_high",
+    "rate": 150,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

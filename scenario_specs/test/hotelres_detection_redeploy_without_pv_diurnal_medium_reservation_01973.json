@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_redeploy_without_pv_diurnal_medium_reservation_01973",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "redeploy_without_pv",
+    "target": "reservation",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_kernel_fault_burst_low_medium_user_00759",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "kernel_fault",
+    "target": "user",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_low",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

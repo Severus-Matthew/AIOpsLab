@@ -1,0 +1,26 @@
+{
+  "scenario_id": "socialnet_analysis_db_auth_missing_steady_high_high_db_06539",
+  "app": "socialnet",
+  "task": "analysis",
+  "fault": {
+    "type": "db_auth_missing",
+    "target": "db",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_high",
+    "rate": 150,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

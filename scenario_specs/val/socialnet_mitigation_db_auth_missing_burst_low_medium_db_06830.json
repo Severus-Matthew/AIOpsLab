@@ -1,0 +1,26 @@
+{
+  "scenario_id": "socialnet_mitigation_db_auth_missing_burst_low_medium_db_06830",
+  "app": "socialnet",
+  "task": "mitigation",
+  "fault": {
+    "type": "db_auth_missing",
+    "target": "db",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_low",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

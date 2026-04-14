@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_mitigation_redeploy_without_pv_steady_low_medium_recommendation_05316",
+  "app": "hotelres",
+  "task": "mitigation",
+  "fault": {
+    "type": "redeploy_without_pv",
+    "target": "recommendation",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_low",
+    "rate": 50,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

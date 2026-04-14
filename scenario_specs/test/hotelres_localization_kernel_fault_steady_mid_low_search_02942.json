@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_kernel_fault_steady_mid_low_search_02942",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "kernel_fault",
+    "target": "search",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

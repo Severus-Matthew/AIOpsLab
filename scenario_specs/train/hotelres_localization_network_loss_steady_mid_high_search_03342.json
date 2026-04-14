@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_network_loss_steady_mid_high_search_03342",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "network_loss",
+    "target": "search",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_container_kill_burst_high_medium_recommendation_02588",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "container_kill",
+    "target": "recommendation",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_high",
+    "rate": 250,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

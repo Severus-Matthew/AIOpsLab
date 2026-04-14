@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_mitigation_wrong_bin_usage_diurnal_high_db_05752",
+  "app": "hotelres",
+  "task": "mitigation",
+  "fault": {
+    "type": "wrong_bin_usage",
+    "target": "db",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

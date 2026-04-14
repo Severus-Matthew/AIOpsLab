@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_analysis_app_misconfig_diurnal_medium_recommendation_04492",
+  "app": "hotelres",
+  "task": "analysis",
+  "fault": {
+    "type": "app_misconfig",
+    "target": "recommendation",
+    "severity": "medium",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

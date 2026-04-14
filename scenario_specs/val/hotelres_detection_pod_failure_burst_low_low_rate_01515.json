@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_pod_failure_burst_low_low_rate_01515",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "pod_failure",
+    "target": "rate",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_low",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

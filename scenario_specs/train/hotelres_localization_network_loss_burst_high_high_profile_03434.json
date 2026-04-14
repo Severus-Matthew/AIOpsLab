@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_localization_network_loss_burst_high_high_profile_03434",
+  "app": "hotelres",
+  "task": "localization",
+  "fault": {
+    "type": "network_loss",
+    "target": "profile",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_high",
+    "rate": 250,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

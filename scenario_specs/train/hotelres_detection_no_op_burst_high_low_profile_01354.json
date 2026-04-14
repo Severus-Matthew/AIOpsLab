@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_no_op_burst_high_low_profile_01354",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "no_op",
+    "target": "profile",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_high",
+    "rate": 250,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "scenario_id": "tidb_cluster_operator_localization_operator_misoperation_burst_high_low_db_09219",
+  "app": "tidb_cluster_operator",
+  "task": "localization",
+  "fault": {
+    "type": "operator_misoperation",
+    "target": "db",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_high",
+    "rate": 250,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

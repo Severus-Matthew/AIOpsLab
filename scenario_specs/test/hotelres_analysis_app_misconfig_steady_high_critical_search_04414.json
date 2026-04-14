@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_analysis_app_misconfig_steady_high_critical_search_04414",
+  "app": "hotelres",
+  "task": "analysis",
+  "fault": {
+    "type": "app_misconfig",
+    "target": "search",
+    "severity": "critical",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_high",
+    "rate": 150,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

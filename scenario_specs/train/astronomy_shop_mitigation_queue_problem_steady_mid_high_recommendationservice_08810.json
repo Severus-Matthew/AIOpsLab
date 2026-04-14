@@ -1,0 +1,26 @@
+{
+  "scenario_id": "astronomy_shop_mitigation_queue_problem_steady_mid_high_recommendationservice_08810",
+  "app": "astronomy_shop",
+  "task": "mitigation",
+  "fault": {
+    "type": "queue_problem",
+    "target": "recommendationservice",
+    "severity": "high",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 15
+  }
+}

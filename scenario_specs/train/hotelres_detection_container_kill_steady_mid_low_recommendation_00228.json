@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_container_kill_steady_mid_low_recommendation_00228",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "container_kill",
+    "target": "recommendation",
+    "severity": "low",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "steady_mid",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

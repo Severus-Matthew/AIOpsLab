@@ -1,0 +1,26 @@
+{
+  "scenario_id": "hotelres_detection_container_kill_burst_low_critical_rate_00315",
+  "app": "hotelres",
+  "task": "detection",
+  "fault": {
+    "type": "container_kill",
+    "target": "rate",
+    "severity": "critical",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "burst_low",
+    "rate": 100,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}

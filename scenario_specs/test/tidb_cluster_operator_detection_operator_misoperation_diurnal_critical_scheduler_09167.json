@@ -1,0 +1,26 @@
+{
+  "scenario_id": "tidb_cluster_operator_detection_operator_misoperation_diurnal_critical_scheduler_09167",
+  "app": "tidb_cluster_operator",
+  "task": "detection",
+  "fault": {
+    "type": "operator_misoperation",
+    "target": "scheduler",
+    "severity": "critical",
+    "start_delay_sec": 60,
+    "duration_sec": 180
+  },
+  "workload": {
+    "type": "wrk",
+    "pattern": "diurnal",
+    "rate": 120,
+    "duration_sec": 300
+  },
+  "telemetry": {
+    "logs": true,
+    "metrics": true,
+    "traces": true
+  },
+  "evaluation": {
+    "max_steps": 10
+  }
+}
