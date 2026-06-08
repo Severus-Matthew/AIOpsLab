@@ -205,3 +205,19 @@ running_on_wsl.txt
 validation_summary.txt
 cleanup.txt
 SESSION_SUMMARY.md
+
+# Local virtual envs with non-standard names
+.venv312/
+.venv*/
+
+# Generated scenario results and telemetry output
+dynamic_generated_scenario_results*/
+aiops_runs/
+scenario_builtin_full_outputs/
+
+# Old/exploratory scripts (not part of main pipeline)
+genarate_scenarios.py
+gennrun.py
+Generate_all_scenarios.py
+get_logs_metrics_traces_json.py
+util.py
