@@ -86,7 +86,7 @@ if ! kubectl get ns observe &>/dev/null || ! helm status prometheus -n observe &
     log "Installing Prometheus..."
     kubectl create namespace observe --dry-run=client -o yaml | kubectl apply -f -
     kubectl apply -f "$AIOPSLAB_DIR/aiopslab/observer/prometheus/prometheus-pvc.yml" -n observe
-    helm dependency update "$AIOPSLAB_DIR/aiopslab/observer/prometheus/prometheus/" --quiet
+    helm dependency update "$AIOPSLAB_DIR/aiopslab/observer/prometheus/prometheus/"
     helm install prometheus "$AIOPSLAB_DIR/aiopslab/observer/prometheus/prometheus/" \
         -n observe --create-namespace
     log "Waiting for Prometheus pods (up to 10 min)..."
