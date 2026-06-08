@@ -4,7 +4,10 @@
 set -euo pipefail
 
 AIOPSLAB_DIR="$(cd "$(dirname "$0")" && pwd)"
-CLUSTER_NAME="aiopslab-local"
+# MUST stay "kind" — AIOpsLab shell.py hardcodes the Docker container name
+# "kind-control-plane" and kubectl.py hardcodes context "kind-kind".
+# Any other cluster name silently breaks shell exec and API calls.
+CLUSTER_NAME="kind"
 
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
 
@@ -38,8 +41,18 @@ done
 
 # ── Create or reuse kind cluster ───────────────────────────────────────────────
 if kind get clusters 2>/dev/null | grep -q "^${CLUSTER_NAME}$"; then
-    log "Cluster '${CLUSTER_NAME}' already exists — reusing."
-else
+    # If the cluster exists but OpenEBS/Prometheus are missing, it's a stale cluster
+    # from before Docker was given more memory. Delete and recreate.
+    if ! kubectl --context "kind-${CLUSTER_NAME}" get ns openebs &>/dev/null 2>&1 || \
+       ! helm --kube-context "kind-${CLUSTER_NAME}" status prometheus -n observe &>/dev/null 2>&1; then
+        log "Cluster '${CLUSTER_NAME}' exists but is missing required components — recreating..."
+        kind delete cluster --name "$CLUSTER_NAME" || true
+    else
+        log "Cluster '${CLUSTER_NAME}' already fully configured — reusing."
+    fi
+fi
+
+if ! kind get clusters 2>/dev/null | grep -q "^${CLUSTER_NAME}$"; then
     log "Creating kind cluster (first run pulls ~2GB image, takes 5-10 min)..."
     cd "$AIOPSLAB_DIR"
     kind create cluster \
