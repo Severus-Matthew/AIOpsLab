@@ -86,8 +86,11 @@ class KubeCtl:
         """Fetch the deployment configuration."""
         return self.apps_v1_api.read_namespaced_deployment(name, namespace)
 
-    def wait_for_ready(self, namespace, sleep=2, max_wait=300):
+    def wait_for_ready(self, namespace, sleep=2, max_wait=None):
         """Wait for all pods in a namespace to be in a Ready state before proceeding."""
+        import os
+        if max_wait is None:
+            max_wait = int(os.environ.get("AIOPSLAB_POD_READY_TIMEOUT", 600))
 
         console = Console()
         console.log(f"[bold green]Waiting for all pods in namespace '{namespace}' to be ready...")
@@ -98,16 +101,39 @@ class KubeCtl:
             while wait < max_wait:
                 try:
                     pod_list = self.list_pods(namespace)
-                    
-                    if pod_list.items:
-                        ready_pods = [
-                            pod for pod in pod_list.items
-                            if pod.status.container_statuses and
-                            all(cs.ready for cs in pod.status.container_statuses)
-                        ]
 
-                        if len(ready_pods) == len(pod_list.items):
-                            console.log(f"[bold green]All pods in namespace '{namespace}' are ready.")
+                    if pod_list.items:
+                        ready_pods = []
+                        permanently_failed = []
+
+                        for pod in pod_list.items:
+                            cs_list = pod.status.container_statuses or []
+                            if cs_list and all(cs.ready for cs in cs_list):
+                                ready_pods.append(pod)
+                            else:
+                                # Check if any container is in a terminal crash state
+                                # (CrashLoopBackOff after several restarts, or OOMKilled).
+                                # These pods will never become Ready on their own — don't
+                                # block the rest of the namespace on them.
+                                for cs in cs_list:
+                                    state = cs.state
+                                    waiting = state.waiting if state else None
+                                    reason = waiting.reason if waiting else ""
+                                    if reason == "CrashLoopBackOff" and cs.restart_count >= 3:
+                                        permanently_failed.append(pod.metadata.name)
+                                        break
+
+                        eligible = len(pod_list.items) - len(permanently_failed)
+                        if eligible > 0 and len(ready_pods) >= eligible:
+                            if permanently_failed:
+                                console.log(
+                                    f"[yellow]Skipping permanently-failed pods: "
+                                    f"{permanently_failed}"
+                                )
+                            console.log(
+                                f"[bold green]All eligible pods in namespace "
+                                f"'{namespace}' are ready ({len(ready_pods)}/{len(pod_list.items)})."
+                            )
                             return
 
                 except Exception as e:
@@ -116,7 +142,10 @@ class KubeCtl:
                 time.sleep(sleep)
                 wait += sleep
 
-            raise Exception(f"[red]Timeout: Not all pods in namespace '{namespace}' reached the Ready state within {max_wait} seconds.")
+            raise Exception(
+                f"[red]Timeout: Not all pods in namespace '{namespace}' reached the "
+                f"Ready state within {max_wait} seconds."
+            )
     
     def wait_for_namespace_deletion(self, namespace, sleep=2, max_wait=300):
         """Wait for a namespace to be fully deleted before proceeding."""

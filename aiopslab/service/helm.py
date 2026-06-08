@@ -94,6 +94,36 @@ class Helm:
         else:
             print(output.decode("utf-8"))
 
+        # Wait for all pods in the namespace to fully terminate before returning.
+        # Without this, the next helm install races with terminating pods and
+        # overwhelms the kubelet, leaving new pods stuck in Pending indefinitely.
+        import time
+        max_wait = int(os.environ.get("AIOPSLAB_UNINSTALL_DRAIN_TIMEOUT", "120"))
+        elapsed = 0
+        kubectl = KubeCtl()
+        print(f"Waiting for pods in '{namespace}' to terminate...")
+        while elapsed < max_wait:
+            try:
+                pod_list = kubectl.list_pods(namespace)
+                alive = [
+                    p for p in pod_list.items
+                    if p.status.phase not in ("Succeeded", "Failed", None)
+                    and p.metadata.deletion_timestamp is None  # not already deleting
+                ]
+                terminating = [
+                    p for p in pod_list.items
+                    if p.metadata.deletion_timestamp is not None
+                ]
+                if not terminating and not alive:
+                    print(f"All pods in '{namespace}' terminated.")
+                    break
+            except Exception:
+                break
+            time.sleep(3)
+            elapsed += 3
+        else:
+            print(f"Warning: pods in '{namespace}' did not fully terminate within {max_wait}s, proceeding anyway.")
+
     @staticmethod
     def exists_release(release_name: str, namespace: str) -> bool:
         """Check if a Helm release exists

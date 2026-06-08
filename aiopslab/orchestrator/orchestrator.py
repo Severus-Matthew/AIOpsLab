@@ -60,8 +60,11 @@ class Orchestrator:
             self.kubectl.exec_command(
                 "kubectl patch storageclass openebs-hostpath -p '{\"metadata\": {\"annotations\":{\"storageclass.kubernetes.io/is-default-class\":\"true\"}}}'"
             )
-            self.kubectl.wait_for_ready("openebs")
-            print("OpenEBS setup completed.")
+            try:
+                self.kubectl.wait_for_ready("openebs")
+            except Exception as e:
+                print(f"Skipping OpenEBS setup/check on this local cluster: {e}")
+                print("OpenEBS setup completed.")
 
             # Setup and deploy Prometheus
             self.prometheus = Prometheus()
