@@ -20,8 +20,10 @@ import os
 import time
 from datetime import datetime
 
-# Give pods up to 15 min to become ready on slow local clusters.
-os.environ.setdefault("AIOPSLAB_POD_READY_TIMEOUT", "900")
+# Give pods up to 20 min to become ready. 900s was too tight after cluster
+# restarts (cold images on worker node + init-container git clones).
+# Can be overridden: AIOPSLAB_POD_READY_TIMEOUT=1200 python gen_and_telmetry.py
+os.environ.setdefault("AIOPSLAB_POD_READY_TIMEOUT", "1200")
 
 WAIT_AFTER_FAULT_SEC = 20
 # Per-scenario timeout: OpenEBS wait (skipped fast now) + helm deploy + telemetry

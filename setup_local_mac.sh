@@ -146,7 +146,13 @@ fi
 log "Using Python: $PYTHON_BIN ($($PYTHON_BIN --version))"
 
 # ── Run data generation ────────────────────────────────────────────────────────
-log "Starting gen_and_telmetry.py ..."
+# Raise pod-ready timeout to 20 min (default 900s is too tight on cold restarts
+# when the worker node needs to pull images or init-containers do git clones).
+export AIOPSLAB_POD_READY_TIMEOUT=1200
+export AIOPSLAB_PREWARM_TIMEOUT=1800
+export AIOPSLAB_UNINSTALL_DRAIN_TIMEOUT=120
+
+log "Starting gen_and_telmetry.py (POD_READY=${AIOPSLAB_POD_READY_TIMEOUT}s) ..."
 "$PYTHON_BIN" "$AIOPSLAB_DIR/gen_and_telmetry.py"
 
 log "Done. Cluster '${CLUSTER_NAME}' is still running."
