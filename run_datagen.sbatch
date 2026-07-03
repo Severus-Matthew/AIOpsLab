@@ -7,9 +7,10 @@
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=96G
-#SBATCH --time=24:00:00
-#SBATCH --output=/u/mjha1/IBM_PROJECT/multiagent_IBM/logs/datagen_%j.out
-#SBATCH --error=/u/mjha1/IBM_PROJECT/multiagent_IBM/logs/datagen_%j.err
+#SBATCH --time=36:00:00
+#SBATCH --array=0-3                  # 4 parallel workers → ~33 h instead of 130 h
+#SBATCH --output=/u/mjha1/IBM_PROJECT/multiagent_IBM/logs/datagen_%A_%a.out
+#SBATCH --error=/u/mjha1/IBM_PROJECT/multiagent_IBM/logs/datagen_%A_%a.err
 
 set -euo pipefail
 
@@ -52,7 +53,12 @@ export CONTAINERS_CONF="${PODMAN_TMP}/containers.conf"
 AIOPSLAB_DIR="/u/mjha1/IBM_PROJECT/multiagent_IBM/AIOpsLab"
 CLUSTER_NAME="aiopslab-datagen"
 
-log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"; }
+# Parallel sharding: each SLURM array task runs on its own compute node with its
+# own kind cluster, and processes 1/N of the 1583 scenarios.
+WORKER_ID="${SLURM_ARRAY_TASK_ID:-0}"
+NUM_WORKERS="${SLURM_ARRAY_TASK_COUNT:-1}"
+
+log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] worker=${WORKER_ID}/${NUM_WORKERS} $*"; }
 
 log "Running on node: $(hostname), arch: $(uname -m)"
 log "CPUs: $(nproc), Memory: $(free -h | awk '/^Mem/{print $2}')"
@@ -70,12 +76,12 @@ if [ ! -d /run/udev ]; then
     mkdir -p /run/udev 2>/dev/null || true
 fi
 
-# ── Create kind cluster (ARM64) ─────────────────────────────────────────────────
+# ── Create kind cluster (x86_64 on Delta AI) ────────────────────────────────────
 log "Creating kind cluster (this pulls the node image on first run ~5-10 min)..."
 cd "$AIOPSLAB_DIR"
 kind create cluster \
     --name "$CLUSTER_NAME" \
-    --config kind/kind-config-arm.yaml \
+    --config kind/kind-config-x86.yaml \
     --wait 10m
 
 kubectl config use-context "kind-${CLUSTER_NAME}"
@@ -97,7 +103,7 @@ log "OpenEBS ready."
 log "Installing Prometheus..."
 kubectl create namespace observe --dry-run=client -o yaml | kubectl apply -f -
 kubectl apply -f aiopslab/observer/prometheus/prometheus-pvc.yml -n observe
-helm dependency update aiopslab/observer/prometheus/prometheus/ --quiet
+helm dependency update aiopslab/observer/prometheus/prometheus/
 helm install prometheus aiopslab/observer/prometheus/prometheus/ \
     -n observe --create-namespace
 log "Waiting for Prometheus pods (up to 10 min for cold image pull)..."
@@ -127,7 +133,11 @@ eval $(poetry env activate)
 python3.11 --version
 
 # ── Run data generation ─────────────────────────────────────────────────────────
-log "Starting gen_and_telmetry.py..."
+log "Starting gen_and_telmetry.py (worker ${WORKER_ID}/${NUM_WORKERS})..."
+AIOPSLAB_WORKER_ID="${WORKER_ID}" \
+AIOPSLAB_NUM_WORKERS="${NUM_WORKERS}" \
+AIOPSLAB_OUT_DIR="/u/mjha1/IBM_PROJECT/multiagent_IBM/AIOpsLab/dynamic_generated_scenario_results_all_new" \
+AIOPSLAB_CLUSTER="${CLUSTER_NAME}" \
 python3.11 gen_and_telmetry.py
 
 log "Data generation complete."

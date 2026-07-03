@@ -22,7 +22,8 @@ class Shell:
         k8s_host = config.get("k8s_host", "localhost")  # Default to localhost
         
         if k8s_host == "kind":
-            return Shell.docker_exec("kind-control-plane", command, timeout=timeout)
+            cluster = os.environ.get("AIOPSLAB_CLUSTER", "kind")
+            return Shell.docker_exec(f"{cluster}-control-plane", command, timeout=timeout)
 
         elif k8s_host == "localhost":
             # print(

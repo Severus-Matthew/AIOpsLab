@@ -36,7 +36,20 @@ from aiopslab.orchestrator import Orchestrator
 # CONFIG
 # ==========================================================
 
-OUT_DIR = Path("dynamic_generated_scenario_results_all_new")
+# Parallel sharding via env vars — maps cleanly to SLURM job arrays:
+#   AIOPSLAB_WORKER_ID   = $SLURM_ARRAY_TASK_ID  (0-based, default 0)
+#   AIOPSLAB_NUM_WORKERS = $SLURM_ARRAY_TASK_COUNT (default 1 = no sharding)
+# Each worker processes all_specs[worker_id::num_workers], so the scenario
+# list is striped across workers with no overlap.
+_WORKER_ID = int(os.environ.get("AIOPSLAB_WORKER_ID", "0"))
+_NUM_WORKERS = int(os.environ.get("AIOPSLAB_NUM_WORKERS", "1"))
+
+OUT_DIR = Path(
+    os.environ.get(
+        "AIOPSLAB_OUT_DIR",
+        "dynamic_generated_scenario_results_all_new"
+    )
+)
 PASSED_DIR = OUT_DIR / "passed"
 FAILED_DIR = OUT_DIR / "failed"
 SPECS_DIR = OUT_DIR / "specs"
@@ -1175,12 +1188,16 @@ def generate_multifault_specs(single_specs, max_pairs=500):
 
 
 def generate_specs():
+    only_multi = os.environ.get("AIOPSLAB_ONLY_MULTIFAULT", "0").strip() == "1"
+    max_multi  = int(os.environ.get("AIOPSLAB_MAX_MULTIFAULT", "1000"))
+
     single_specs = list(generate_single_fault_specs())
 
-    for s in single_specs:
-        yield s
+    if not only_multi:
+        for s in single_specs:
+            yield s
 
-    for s in generate_multifault_specs(single_specs, max_pairs=1000):
+    for s in generate_multifault_specs(single_specs, max_pairs=max_multi):
         yield s
 
 class MultiFaultProblem:
@@ -2010,6 +2027,12 @@ async def main():
 
     all_specs = list(generate_specs())
 
+    # Shard the scenario list when running multiple parallel workers.
+    # Striped slicing (not chunked) gives each worker a balanced mix of
+    # apps/fault types rather than one worker doing all social-network.
+    if _NUM_WORKERS > 1:
+        all_specs = all_specs[_WORKER_ID::_NUM_WORKERS]
+
     runnable_specs = []
     skipped = 0
 
@@ -2022,6 +2045,8 @@ async def main():
     print("====================================")
     print("Dynamic AIOpsLab Scenario Generator")
     print("====================================")
+    if _NUM_WORKERS > 1:
+        print(f"Worker:                {_WORKER_ID + 1} / {_NUM_WORKERS}")
     print(f"Total candidate specs: {len(all_specs)}")
     print(f"Skipped existing:      {skipped}")
     print(f"To run now:            {len(runnable_specs)}")
